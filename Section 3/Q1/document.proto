@@ -1,0 +1,76 @@
+// Q1 - Collaborative Document Editing using gRPC
+//
+// A central DocumentService keeps every document in memory. Clients create,
+// read and edit documents with unary RPCs, and receive the new contents of a
+// document after every change through the server-streaming SubscribeToUpdates.
+
+syntax = "proto3";
+
+package docs;
+
+service DocumentService {
+  // Creates a new document with a unique name and initial content.
+  rpc CreateDocument(CreateDocumentRequest) returns (CreateDocumentResponse);
+
+  // Returns the current contents of a document.
+  rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse);
+
+  // Inserts text at a character position of an existing document.
+  rpc EditDocument(EditDocumentRequest) returns (EditDocumentResponse);
+
+  // Streams the full, latest contents of the document after every edit,
+  // until the client cancels the call or the server shuts down.
+  rpc SubscribeToUpdates(UpdateRequest) returns (stream DocumentUpdate);
+}
+
+message CreateDocumentRequest {
+  string name = 1;
+  string content = 2;
+}
+
+message CreateDocumentResponse {
+  bool success = 1;
+  string message = 2;   // reason when success is false
+}
+
+message GetDocumentRequest {
+  string name = 1;
+}
+
+message GetDocumentResponse {
+  bool success = 1;
+  string message = 2;
+  string content = 3;
+  uint64 version = 4;   // number of edits applied so far
+}
+
+message EditDocumentRequest {
+  string name = 1;
+  uint64 position = 2;  // 0 <= position <= length of the document
+  string text = 3;
+  string client_id = 4; // who made the edit, shown to subscribers
+}
+
+message EditDocumentResponse {
+  bool success = 1;
+  string message = 2;
+  string content = 3;   // document contents right after this edit
+  uint64 version = 4;
+}
+
+message UpdateRequest {
+  string name = 1;
+  string client_id = 2;
+}
+
+message DocumentUpdate {
+  string name = 1;
+  string content = 2;
+  uint64 version = 3;
+  string editor = 4;    // client_id of the client that made the edit
+  uint64 position = 5;
+  string text = 6;
+  // true only for the first message of a stream: the current contents, sent
+  // as soon as the subscription is registered (acknowledges the subscribe)
+  bool snapshot = 7;
+}

@@ -3,5 +3,11 @@ note.txt
 
 # build outputs and temporary MapReduce work directories
 Section 1/Q3/q3
+Section 1/Q3/sequential
 Section 1/Q3/q3_work_*/
 *.o
+
+# generated gRPC Python code (made from document.proto on first run)
+Section 3/**/*_pb2.py
+Section 3/**/*_pb2_grpc.py
+__pycache__/

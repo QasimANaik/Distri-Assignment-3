@@ -1,0 +1,5 @@
+input_file,input_size_bytes,num_edges,num_tasks,degree_time_s,wedge_time_s,close_time_s,total_job_time_s,total_time_s,triangles
+q3_sample.txt,24,5,4,1.071547,.681008,1.023874,.005695,2.800987,2
+q3_small.txt,78089,10000,4,1.073529,.681819,1.067689,.006210,2.852258,9312
+q3_medium.txt,976283,100000,4,1.111049,.793021,1.411500,.005515,3.361570,82782
+q3_large.txt,11801962,1000000,4,1.709386,1.817595,5.170330,.005620,8.958649,784965
