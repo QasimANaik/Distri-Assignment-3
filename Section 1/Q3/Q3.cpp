@@ -4,7 +4,7 @@
  * Every map / combine / reduce function of the pipeline lives in this file and
  * is selected by the first command-line argument, Hadoop-Streaming style:
  * records are read from stdin and written to stdout as "key<TAB>value" lines,
- * and the framework (run_q3.sh, or Hadoop) sorts/shuffles between the stages.
+ * and the framework (Q3ForLocalTesting.sh / Q3_distributed.sh, or Hadoop) sorts/shuffles between the stages.
  *
  *   build:  g++ -O2 -std=c++17 -o q3 Q3.cpp
  *   usage:  ./q3 <phase> [args...]
