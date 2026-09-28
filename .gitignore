@@ -1,0 +1,7 @@
+# RCE account credentials - never commit
+note.txt
+
+# build outputs and temporary MapReduce work directories
+Section 1/Q3/q3
+q3_work.*/
+*.o
